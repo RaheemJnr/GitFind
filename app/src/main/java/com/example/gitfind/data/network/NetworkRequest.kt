@@ -12,9 +12,6 @@ import retrofit2.http.Query
 
 const val BASE_URL = "https://api.github.com/search/"
 
-
-const val API_KEY = "034da672af3e87a27b2bfb04a03baaa1"
-
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
@@ -35,13 +32,7 @@ object GitFindApiCall {
         retrofit.create(GitFindService::class.java)
     }
 
-//    //
-//    val WEATHER_DETAIL_SERVICE: GetWeatherDetailsService by lazy {
-//        retrofit.create(GetWeatherDetailsService::class.java)
-//    }
 }
-
-//repositories?q=stars:%3E=10000+language:android&sort=stars&order=desc
 
 /**
  * A retrofit service to fetch list of github repo data
@@ -51,12 +42,7 @@ interface GitFindService {
     @GET("repositories")
     suspend fun getGitRepositories(
         @Query("q") query: String,
-        @Query("sort") sort: String = "stars"
+        @Query("sort") sort: String = "stars",
+        @Query("order") order: String = "desc"
     ): GithubResponses
 }
-
-////
-//interface GetWeatherDetailsService {
-//    @GET("forecast?q=harare&units=metric&cnt=1&appid=$API_KEY")
-//    suspend fun getWeatherDataDetails(): WeatherListResponse
-//}

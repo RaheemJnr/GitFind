@@ -8,8 +8,8 @@ data class GithubListData(
     val name: String? = null,
     val owner: Owner,
     val url: String,
-    val stargazer_count: Int,
-    val language: String
+    val stargazers_count: Int?,
+    val language: String?
 
 )
 

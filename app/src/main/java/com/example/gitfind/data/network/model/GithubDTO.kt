@@ -17,9 +17,9 @@ data class GithubDTO(
     val owner: Owner,
     @Json(name = "url")
     val url: String,
-    @Json(name = "stargazer_count")
-    val stargazer_count: Int,
+    @Json(name = "stargazers_count")
+    val stargazer_count: Int?,
     @Json(name = "language")
-    val language: String
+    val language: String?
 
 )

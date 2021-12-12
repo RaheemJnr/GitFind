@@ -16,7 +16,7 @@ class DTOMapper : DomainMapper<GithubDTO, GithubListData> {
             name = model.name,
             owner = model.owner,
             url = model.url,
-            stargazer_count = model.stargazer_count,
+            stargazers_count = model.stargazer_count,
             language = model.language
         )
 
@@ -29,7 +29,7 @@ class DTOMapper : DomainMapper<GithubDTO, GithubListData> {
             name = domainModel.name,
             owner = domainModel.owner,
             url = domainModel.url,
-            stargazer_count = domainModel.stargazer_count,
+            stargazer_count = domainModel.stargazers_count,
             language = domainModel.language
         )
     }

@@ -10,7 +10,7 @@ import com.example.gitfind.domain.GithubListData
  */
 class GitFindRepoImpl(private val mapper: DTOMapper) : GitFindDataRepo {
 
-    override suspend fun getHarareWeatherDataList(query: String): List<GithubListData> {
+    override suspend fun getGitHubDataList(query: String): List<GithubListData> {
         return mapper.toDomainList(
             GitFindApiCall.GIT_FIND_SERVICE.getGitRepositories(query).listItems
         )
