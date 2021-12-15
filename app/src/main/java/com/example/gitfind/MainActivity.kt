@@ -16,7 +16,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            GitFindTheme {
+            //base application // refactor
+            val application = BaseApplication()
+            GitFindTheme(darkTheme = application.isDark.value) {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     MainScreenNavigation()

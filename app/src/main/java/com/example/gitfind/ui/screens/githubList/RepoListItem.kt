@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import com.example.gitfind.domain.GithubListData
-import com.example.gitfind.ui.screens.CircularImageView
+import com.example.gitfind.ui.screens.networkImage.CircularImageView
 import java.util.*
 
 @ExperimentalCoilApi
@@ -41,7 +41,7 @@ fun RepoListItem(
     }
     Surface(
         elevation = 8.dp,
-        modifier = Modifier.padding(8.dp),
+        modifier = Modifier.padding(4.dp),
         shape = RoundedCornerShape(8.dp)
     ) {
         Column(
@@ -53,7 +53,7 @@ fun RepoListItem(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(4.dp),
                 text = repoData.name ?: "HH",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.SemiBold
@@ -61,7 +61,7 @@ fun RepoListItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 8.dp, bottom = 16.dp),
+                    .padding(start = 4.dp, bottom = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 //owner name
@@ -100,7 +100,7 @@ fun RepoListItem(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 //
                 CircularImageView(uri = repoData.owner.avatar_url)

@@ -1,4 +1,4 @@
-package com.example.gitfind.ui.screens
+package com.example.gitfind.ui.screens.networkImage
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -31,7 +31,7 @@ fun CircularImageView(
     placeholderColor: Color? = MaterialTheme.colors.compositedOnSurface(0.2f),
 ) {
     Card(
-        modifier = Modifier.size(100.dp),
+        modifier = Modifier.size(70.dp),
         shape = CircleShape,
         elevation = 22.dp,
         border = BorderStroke(2.dp, Color.Gray)

@@ -19,7 +19,7 @@ class GitFindViewModel(private val repo: GitFindDataRepo) : ViewModel() {
     // for list
     val repos: MutableState<List<GithubListData>> = mutableStateOf(listOf())
 
-    val query = mutableStateOf("Flutter")
+    val query = mutableStateOf("Android")
 
     //
     val listLoading: MutableState<Boolean> = mutableStateOf(false)
