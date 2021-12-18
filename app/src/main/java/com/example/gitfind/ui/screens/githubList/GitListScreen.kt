@@ -3,16 +3,18 @@ package com.example.gitfind.ui.screens.githubList
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -20,14 +22,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
-import com.example.gitfind.BaseApplication
 import com.example.gitfind.data.DTOMapper
+import com.example.gitfind.domain.GithubListData
 import com.example.gitfind.repository.GitFindRepoImpl
 import com.example.gitfind.ui.theme.GitFindTheme
-import com.example.gitfind.ui.viewModel.AuthViewModelFactory
 import com.example.gitfind.ui.viewModel.GitFindViewModel
+import com.example.gitfind.utils.GetDarkMode
 import com.example.gitfind.utils.LoaderDialog
+import kotlinx.coroutines.launch
 
 //
 //val selectedRepo: MutableState<RepoCategory?> = mutableStateOf(null)
@@ -38,19 +45,28 @@ import com.example.gitfind.utils.LoaderDialog
 fun GitHubListScreen() {
     // reference to viewModel
     val gitFindViewModel: GitFindViewModel = viewModel(
-        factory = AuthViewModelFactory(GitFindRepoImpl(DTOMapper()))
+        factory = GitFindViewModel.GitFindViewModelFactory(GitFindRepoImpl(DTOMapper()))
     )
-    // weatherViewModel.addQuery("android")
     //
     val weather = gitFindViewModel.repos.value
     val query = gitFindViewModel.query.value
     val selectedRepo = gitFindViewModel.selectedRepo.value
     val loading = gitFindViewModel.listLoading.value
-
-    //base application -> refactor
-    val application = BaseApplication()
     //
-    GitFindTheme(application.isDark.value) {
+    val pagingItems = gitFindViewModel.addQuery().collectAsLazyPagingItems()
+    val lazyListState = rememberLazyListState()
+
+
+    //
+    val isDarkk = remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val localStore = GetDarkMode(context)
+    val scope = rememberCoroutineScope()
+
+    val isDark = localStore.getIsDarkTheme.collectAsState(initial = false)
+
+    //
+    GitFindTheme(isDark.value) {
         Surface() {
             Column(
                 Modifier
@@ -61,7 +77,14 @@ fun GitHubListScreen() {
                 SearchBar(
                     query,
                     gitFindViewModel,
-                    onToggleTheme = { application.toggleTheme() }
+                    onToggleTheme = {
+                        isDarkk.value = !isDarkk.value
+                        scope.launch {
+                            localStore.saveIsDarkTheme(isDarkk.value)
+                        }
+
+
+                    }
                 )
                 // chip group
                 RepoGroup(
@@ -71,24 +94,41 @@ fun GitHubListScreen() {
                     },
                     onExecuteSearch = gitFindViewModel::addQuery
                 )
-                if (loading) {
-                    LoaderDialog()
-
-                } else {
-                    //
-                    LazyColumn() {
-                        itemsIndexed(
-                            items = weather
-                        ) { _, item ->
+                //
+              //  GitHubItemList(pagingItems, lazyListState)
+                LazyColumn() {
+                    itemsIndexed(pagingItems) { _, item ->
+                        if (item != null) {
                             RepoListItem(
                                 repoData = item
                             )
                         }
                     }
+                    pagingItems.apply {
+                        when {
+                            loadState.refresh is LoadState.Loading -> item {
+                                LoaderDialog()
+                            }
+                            loadState.append is LoadState.Loading -> {
+                                item { LoaderDialog() }
+                            }
+                        }
+                    }
                 }
+
             }
         }
     }
+
+}
+
+@ExperimentalCoilApi
+@Composable
+private fun GitHubItemList(
+    pagingItems: LazyPagingItems<GithubListData>,
+    scrollState: LazyListState
+) {
+
 
 }
 
@@ -118,10 +158,12 @@ private fun SearchBar(
                 label = {
                     Text(text = "Search")
                 },
-                leadingIcon = { Icon(
-                    Icons.Filled.Search, contentDescription = "",
-                    tint = MaterialTheme.colors.onSurface
-                ) },
+                leadingIcon = {
+                    Icon(
+                        Icons.Filled.Search, contentDescription = "",
+                        tint = MaterialTheme.colors.onSurface
+                    )
+                },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Done

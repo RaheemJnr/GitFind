@@ -17,8 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             //base application // refactor
-            val application = BaseApplication()
-            GitFindTheme(darkTheme = application.isDark.value) {
+            GitFindTheme() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     MainScreenNavigation()
