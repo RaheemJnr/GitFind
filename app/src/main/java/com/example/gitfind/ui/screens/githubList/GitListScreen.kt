@@ -95,26 +95,7 @@ fun GitHubListScreen() {
                     onExecuteSearch = gitFindViewModel::addQuery
                 )
                 //
-              //  GitHubItemList(pagingItems, lazyListState)
-                LazyColumn() {
-                    itemsIndexed(pagingItems) { _, item ->
-                        if (item != null) {
-                            RepoListItem(
-                                repoData = item
-                            )
-                        }
-                    }
-                    pagingItems.apply {
-                        when {
-                            loadState.refresh is LoadState.Loading -> item {
-                                LoaderDialog()
-                            }
-                            loadState.append is LoadState.Loading -> {
-                                item { LoaderDialog() }
-                            }
-                        }
-                    }
-                }
+                GitHubItemList(pagingItems, lazyListState)
 
             }
         }
@@ -128,7 +109,26 @@ private fun GitHubItemList(
     pagingItems: LazyPagingItems<GithubListData>,
     scrollState: LazyListState
 ) {
-
+    LazyColumn(state = scrollState) {
+        itemsIndexed(pagingItems) { _, item ->
+            if (item != null) {
+                RepoListItem(
+                    repoData = item
+                )
+            }
+        }
+        //
+        pagingItems.apply {
+            when {
+                loadState.refresh is LoadState.Loading -> item {
+                    LoaderDialog()
+                }
+                loadState.append is LoadState.Loading -> {
+                    item { LoaderDialog() }
+                }
+            }
+        }
+    }
 
 }
 
