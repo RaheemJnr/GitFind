@@ -48,10 +48,8 @@ fun GitHubListScreen() {
         factory = GitFindViewModel.GitFindViewModelFactory(GitFindRepoImpl(DTOMapper()))
     )
     //
-    val weather = gitFindViewModel.repos.value
     val query = gitFindViewModel.query.value
     val selectedRepo = gitFindViewModel.selectedRepo.value
-    val loading = gitFindViewModel.listLoading.value
     //
     val pagingItems = gitFindViewModel.addQuery().collectAsLazyPagingItems()
     val lazyListState = rememberLazyListState()
@@ -125,6 +123,10 @@ private fun GitHubItemList(
                 }
                 loadState.append is LoadState.Loading -> {
                     item { LoaderDialog() }
+                }
+                loadState.refresh is LoadState.Error -> item {
+                    //refactor
+                    Text(text = "Error fetching data")
                 }
             }
         }

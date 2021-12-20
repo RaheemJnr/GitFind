@@ -27,7 +27,6 @@ class GitFindViewModel(private val repo: GitFindDataRepo) : ViewModel() {
     val listLoading: MutableState<Boolean> = mutableStateOf(false)
 
     val selectedRepo: MutableState<RepoCategory?> = mutableStateOf(null)
-    val error: MutableState<Boolean> = mutableStateOf(false)
 
     init {
         addQuery()
@@ -48,7 +47,8 @@ class GitFindViewModel(private val repo: GitFindDataRepo) : ViewModel() {
 //
 //        }
 //    }
-// launch a coroutine scope, show loading value,fetch data and render the data
+
+    // launch a coroutine scope, show loading value,fetch data and render the data
     fun addQuery(pageSize: Int = 20) =
         Pager(config = PagingConfig(pageSize = pageSize, initialLoadSize = pageSize)) {
             PageNumSource { pageNum, pageSize ->
@@ -56,13 +56,11 @@ class GitFindViewModel(private val repo: GitFindDataRepo) : ViewModel() {
             }
         }.flow.cachedIn(viewModelScope)
 
-
-    //
+    // observe and add the new query
     fun onQueryChanged(query: String) {
         this.query.value = query
     }
-
-    //
+    // check if category changed
     fun onSelectedRepoChanged(repo: String) {
         val newRepo = getRepoCategory(repo)
         selectedRepo.value = newRepo
