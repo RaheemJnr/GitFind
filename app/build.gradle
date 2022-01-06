@@ -63,7 +63,7 @@ dependencies {
     implementation "androidx.paging:paging-compose:1.0.0-alpha14"
 
     //compose navigation
-    implementation 'androidx.navigation:navigation-compose:2.4.0-beta02'
+    implementation 'androidx.navigation:navigation-compose:2.4.0-rc01'
 
     //data store
     implementation "androidx.datastore:datastore-preferences:1.0.0"
@@ -76,6 +76,7 @@ dependencies {
 
     // Moshi for parsing the JSON format
     implementation "com.squareup.moshi:moshi-kotlin:1.9.3"
+
     // Material design icons for icons used in app
     implementation 'androidx.compose.material:material-icons-extended:1.0.5'
 
@@ -85,8 +86,8 @@ dependencies {
 
     //test
     // testImplementation 'junit:junit:'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+//    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+//    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 }

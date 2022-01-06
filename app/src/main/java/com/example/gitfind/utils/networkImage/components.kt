@@ -1,4 +1,4 @@
-package com.example.gitfind.ui.screens.networkImage
+package com.example.gitfind.utils.networkImage
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -18,6 +18,7 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.gitfind.R
 import com.example.gitfind.ui.theme.compositedOnSurface
+
 
 /**
 function to display user profile image

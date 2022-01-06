@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.example.gitfind.domain.GithubListData
 import com.example.gitfind.repository.GitFindDataRepo
 import com.example.gitfind.ui.screens.githubList.RepoCategory
 import com.example.gitfind.ui.screens.githubList.getRepoCategory
@@ -18,14 +17,8 @@ import com.example.gitfind.ui.screens.githubList.getRepoCategory
  * i used the same viewModel for both the list and detail screen because the code is straight forward and not too much
  */
 class GitFindViewModel(private val repo: GitFindDataRepo) : ViewModel() {
-    // for list
-    val repos: MutableState<List<GithubListData>> = mutableStateOf(listOf())
 
-    val query = mutableStateOf("Android")
-
-    //
-    val listLoading: MutableState<Boolean> = mutableStateOf(false)
-
+    val query = mutableStateOf(" Android")
     val selectedRepo: MutableState<RepoCategory?> = mutableStateOf(null)
 
     init {
@@ -60,6 +53,7 @@ class GitFindViewModel(private val repo: GitFindDataRepo) : ViewModel() {
     fun onQueryChanged(query: String) {
         this.query.value = query
     }
+
     // check if category changed
     fun onSelectedRepoChanged(repo: String) {
         val newRepo = getRepoCategory(repo)
@@ -69,7 +63,7 @@ class GitFindViewModel(private val repo: GitFindDataRepo) : ViewModel() {
 
 
     /** viewModel Factory
-     * it function is to tell the viewmodel how to
+     * it function is to tell the viewModel how to
      * create the repo object injected as a dependency
      * */
     class GitFindViewModelFactory(private val repo: GitFindDataRepo) : ViewModelProvider.Factory {

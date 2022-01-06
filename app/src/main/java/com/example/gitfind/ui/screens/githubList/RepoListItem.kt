@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import com.example.gitfind.domain.GithubListData
-import com.example.gitfind.ui.screens.networkImage.CircularImageView
+import com.example.gitfind.utils.networkImage.CircularImageView
 import java.util.*
 
 @ExperimentalCoilApi

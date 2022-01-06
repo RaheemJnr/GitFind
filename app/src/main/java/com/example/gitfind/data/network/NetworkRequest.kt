@@ -37,7 +37,7 @@ object GitFindApiCall {
 
 /**
  * A retrofit service to fetch list of github repo data
- * for listScreen and a single weather data for details screen
+ * for listScreen
  */
 interface GitFindService {
     @GET("repositories")
@@ -46,6 +46,6 @@ interface GitFindService {
         @Query("sort") sort: String = "stars",
         @Query("order") order: String = "desc",
         @Query("page") page: Int = 1,
-        @Query("per_page") pageSize: Int = 20
+        @Query("per_page") pageSize: Int = 2
     ): Response<GithubResponses>
 }
