@@ -15,4 +15,17 @@
     <style name="Theme.GitFind.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.GitFind.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    //splash
+
+    <style name="Theme.splash" parent="Theme.SplashScreen">
+
+        <item name="windowSplashScreenBackground">#FFFFFF</item>
+
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+
+        <item name="postSplashScreenTheme">@style/Theme.GitFind.NoActionBar</item>
+
+        # Required.
+    </style>
 </resources>

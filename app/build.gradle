@@ -68,6 +68,9 @@ dependencies {
     //data store
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
+    //splash screen
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
+
     // Retrofit for networking
     // Retrofit with Moshi Converter for parsing data
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
