@@ -64,7 +64,7 @@ fun GitHubListScreen() {
     val isDark = localStore.getIsDarkTheme.collectAsState(initial = false)
 
     //
-    GitFindTheme(isDark.value) {
+    GitFindTheme() {
         Surface() {
             Column(
                 Modifier
