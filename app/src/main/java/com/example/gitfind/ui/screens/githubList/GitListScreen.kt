@@ -36,8 +36,6 @@ import com.example.gitfind.utils.GetDarkMode
 import com.example.gitfind.utils.LoaderDialog
 import kotlinx.coroutines.launch
 
-//
-//val selectedRepo: MutableState<RepoCategory?> = mutableStateOf(null)
 
 @ExperimentalCoilApi
 @ExperimentalAnimationApi
