@@ -12,17 +12,28 @@ import androidx.paging.cachedIn
 import com.example.gitfind.repository.GitFindDataRepo
 import com.example.gitfind.ui.screens.githubList.RepoCategory
 import com.example.gitfind.ui.screens.githubList.getRepoCategory
+import com.example.gitfind.utils.GetDarkMode
+import kotlinx.coroutines.launch
 
 /**
  * i used the same viewModel for both the list and detail screen because the code is straight forward and not too much
  */
-class GitFindViewModel(private val repo: GitFindDataRepo) : ViewModel() {
+class GitFindViewModel(
+    private val repo: GitFindDataRepo,
+    private val preference: GetDarkMode
+) : ViewModel() {
 
     val query = mutableStateOf(" Android")
     val selectedRepo: MutableState<RepoCategory?> = mutableStateOf(null)
 
     init {
         addQuery()
+    }
+
+    fun toggleTheme(isDark: Boolean) {
+        viewModelScope.launch {
+            preference.saveIsDarkTheme(isDark)
+        }
     }
 
     //    //launch a coroutine scope, show loading value,fetch data and render the data
@@ -66,10 +77,13 @@ class GitFindViewModel(private val repo: GitFindDataRepo) : ViewModel() {
      * it function is to tell the viewModel how to
      * create the repo object injected as a dependency
      * */
-    class GitFindViewModelFactory(private val repo: GitFindDataRepo) : ViewModelProvider.Factory {
+    class GitFindViewModelFactory(
+        private val repo: GitFindDataRepo,
+        private val preference: GetDarkMode
+    ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return GitFindViewModel(repo) as T
+            return GitFindViewModel(repo, preference) as T
         }
     }
 }
