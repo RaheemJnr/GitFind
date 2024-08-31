@@ -45,7 +45,6 @@ import com.example.gitfind.repository.GitFindRepoImpl
 import com.example.gitfind.ui.viewModel.GitFindViewModel
 import com.example.gitfind.utils.GetDarkMode
 import com.example.gitfind.utils.LoaderDialog
-import kotlinx.coroutines.launch
 
 //
 //val selectedRepo: MutableState<RepoCategory?> = mutableStateOf(null)
@@ -89,9 +88,7 @@ fun GitHubListScreen() {
                 gitFindViewModel,
                 onToggleTheme = {
                     isDarkk.value = !isDarkk.value
-                    scope.launch {
-                        gitFindViewModel.toggleTheme(isDarkk.value)
-                    }
+                    gitFindViewModel.toggleTheme(isDarkk.value)
 
 
                 }
